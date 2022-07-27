@@ -14,19 +14,15 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
         } else {
             return -10000 + depth;
         }
+    } else if (b.isFull()) {
+        return 0;
     } else if (depth > maxDepth) {
         int x = b.countTriples(c);
         int y = b.countTriples(op);
         if (isMin) {
             swap(x, y);
         }
-        if (x - y > 0) {
-            return 100 * (x - y) - depth;
-        } else if (x - y < 0) {
-            return 100 * (x - y) + depth;
-        } else {
-            return 0;
-        }
+        return 100 * (x - y);
     } else if (isMin) {
         int minVal = INT_MAX;
         for (int i = 0; i < b.width; i++) {
@@ -38,11 +34,7 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
             minVal = min(minVal, minimax(b, op, c, false, depth + 1));
             b.pop(i);
         }
-        if (minVal == INT_MAX) {
-            return 0;
-        } else {
-            return minVal;
-        }
+        return minVal;
     } else {
         int maxVal = INT_MIN;
         for (int i = 0; i < b.width; i++) {
@@ -54,11 +46,7 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
             maxVal = max(maxVal, minimax(b, op, c, true, depth + 1));
             b.pop(i);
         }
-        if (maxVal == INT_MIN) {
-            return 0;
-        } else {
-            return maxVal;
-        }
+        return maxVal;
     }
 }
 

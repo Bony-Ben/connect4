@@ -190,8 +190,10 @@ int board::count() {
 
 bool board::empty() {
     for (int i = 0; i < width; i++) {
-        if (state[i].size()) {
-            return false;
+        for (int j = 0; j < height; j++) {
+            if (state[i][j]) {
+                return false;
+            }
         }
     }
     return true;
