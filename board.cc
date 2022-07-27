@@ -99,19 +99,21 @@ bool board::isFull() {
 }
 
 int board::countTriples(char player) {
-    int triple = connectLen - 1;
     int count = 0;
 
     for (int k = 0; k < height; k++) {
         for (int i = 0; i + connectLen - 1 < width; i++) {
-            bool same = true;
-            for (int j = i; j < i + triple - 1; j++) {
-                if (state[j][k] != state[j + 1][k]) {
-                    same = false;
+            int miniCount = 0;
+            bool bad = false;
+            for (int j = i; j <= i + connectLen - 1; j++) {
+                if (state[j][k] == player) {
+                    miniCount++;
+                } else if (state[j][k]) {
+                    bad = true;
                     break;
                 }
             }
-            if (same && state[i][k] == player) {
+            if (!bad && miniCount >= 3) {
                 count++;
             }
         }
@@ -119,14 +121,17 @@ int board::countTriples(char player) {
 
     for (int k = 0; k < width; k++) {
         for (int i = 0; i + connectLen - 1 < height; i++) {
-            bool same = true;
-            for (int j = i; j < i + triple - 1; j++) {
-                if (state[k][j] != state[k][j + 1]) {
-                    same = false;
+            int miniCount = 0;
+            bool bad = false;
+            for (int j = i; j <= i + connectLen - 1; j++) {
+                if (state[k][j] == player) {
+                    miniCount++;
+                } else if (state[k][j]) {
+                    bad = true;
                     break;
                 }
             }
-            if (same && state[k][i] == player) {
+            if (!bad && miniCount >= 3) {
                 count++;
             }
         }
@@ -134,14 +139,17 @@ int board::countTriples(char player) {
 
     for (int i = 0; i + connectLen - 1 < width; i++) {
         for (int j = 0; j + connectLen - 1 < height; j++) {
-            bool same = true;
-            for (int k = 0; k < triple - 1; k++) {
-                if (state[i + k][j + k] != state[i + k + 1][j + k + 1]) {
-                    same = false;
+            int miniCount = 0;
+            bool bad = false;
+            for (int k = 0; k <= connectLen - 1; k++) {
+                if (state[i + k][j + k] == player) {
+                    miniCount++;
+                } else if (state[i + k][j + k]) {
+                    bad = true;
                     break;
                 }
             }
-            if (same && state[i][j] == player) {
+            if (!bad && miniCount >= 3) {
                 count++;
             }
         }
@@ -149,14 +157,17 @@ int board::countTriples(char player) {
 
     for (int i = 0; i + connectLen - 1 < width; i++) {
         for (int j = height - 1; j - connectLen + 1 >= 0; j--) {
-            bool same = true;
-            for (int k = 0; k < triple - 1; k++) {
-                if (state[i + k][j - k] != state[i + k + 1][j - k - 1]) {
-                    same = false;
+            int miniCount = 0;
+            bool bad = false;
+            for (int k = 0; k <= connectLen - 1; k++) {
+                if (state[i + k][j - k] == player) {
+                    miniCount++;
+                } else if (state[i + k][j - k]) {
+                    bad = true;
                     break;
                 }
             }
-            if (same && state[i][j] == player) {
+            if (!bad && miniCount >= 3) {
                 count++;
             }
         }
