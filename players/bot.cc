@@ -25,7 +25,7 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
         return 100 * (x - y);
     } else if (isMin) {
         int minVal = INT_MAX;
-        for (int i = 0; i < b.width; i++) {
+        for (int i = 0; i < b.width && minVal > -9000; i++) {
             try {
                 b.insert(c, i);
             } catch (const char *e) {
@@ -37,7 +37,7 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
         return minVal;
     } else {
         int maxVal = INT_MIN;
-        for (int i = 0; i < b.width; i++) {
+        for (int i = 0; i < b.width && maxVal < 9000; i++) {
             try {
                 b.insert(c, i);
             } catch (const char *e) {
@@ -56,7 +56,7 @@ void bot::makeMove(board &b, char c, char op) {
         return;
     }
 
-    maxDepth = 7 + b.count() / 9;
+    maxDepth = 7 + b.count() / 8;
     board tempB{b};
 
     int max = INT_MIN;
