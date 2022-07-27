@@ -98,6 +98,73 @@ bool board::isFull() {
     return true;
 }
 
+int board::countTriples(char player) {
+    int triple = connectLen - 1;
+    int count = 0;
+
+    for (int k = 0; k < height; k++) {
+        for (int i = 0; i + connectLen - 1 < width; i++) {
+            bool same = true;
+            for (int j = i; j < i + triple - 1; j++) {
+                if (state[j][k] != state[j + 1][k]) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same && state[i][k] == player) {
+                count++;
+            }
+        }
+    }
+
+    for (int k = 0; k < width; k++) {
+        for (int i = 0; i + connectLen - 1 < height; i++) {
+            bool same = true;
+            for (int j = i; j < i + triple - 1; j++) {
+                if (state[k][j] != state[k][j + 1]) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same && state[k][i] == player) {
+                count++;
+            }
+        }
+    }
+
+    for (int i = 0; i + connectLen - 1 < width; i++) {
+        for (int j = 0; j + connectLen - 1 < height; j++) {
+            bool same = true;
+            for (int k = 0; k < triple - 1; k++) {
+                if (state[i + k][j + k] != state[i + k + 1][j + k + 1]) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same && state[i][j] == player) {
+                count++;
+            }
+        }
+    }
+
+    for (int i = 0; i + connectLen - 1 < width; i++) {
+        for (int j = height - 1; j - connectLen + 1 >= 0; j--) {
+            bool same = true;
+            for (int k = 0; k < triple - 1; k++) {
+                if (state[i + k][j - k] != state[i + k + 1][j - k - 1]) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same && state[i][j] == player) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
 ostream& operator<<(ostream& os, const board& b) {
     for (int j = b.height - 1; j >= 0; j--) {
         for (int i = 0; i < b.width; i++) {

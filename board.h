@@ -17,6 +17,7 @@ class board {
     void pop(int index);
     char getWinner();
     bool isFull();
+    int countTriples(char player);
 
     friend ostream& operator<<(ostream& os, const board& b);
 };

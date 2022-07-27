@@ -10,12 +10,16 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
     char winner = b.getWinner();
     if (winner) {
         if (isMin) {
-            return 1000 - depth;
+            return 10000 - depth;
         } else {
-            return -1000 + depth;
+            return -10000 + depth;
         }
     } else if (depth > maxDepth) {
-        return 0;
+        if (isMin) {
+            return 100 * (b.countTriples(op) - b.countTriples(c));
+        } else {
+            return 100 * (b.countTriples(c) - b.countTriples(op));
+        }
     } else if (isMin) {
         int minVal = INT_MAX;
         for (int i = 0; i < b.width; i++) {
