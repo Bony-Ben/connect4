@@ -18,6 +18,8 @@ class board {
     char getWinner();
     bool isFull();
     int countTriples(char player);
+    int count();
+    bool empty();
 
     friend ostream& operator<<(ostream& os, const board& b);
 };

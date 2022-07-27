@@ -15,10 +15,17 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
             return -10000 + depth;
         }
     } else if (depth > maxDepth) {
+        int x = b.countTriples(c);
+        int y = b.countTriples(op);
         if (isMin) {
-            return 100 * (b.countTriples(op) - b.countTriples(c));
+            swap(x, y);
+        }
+        if (x - y > 0) {
+            return 100 * (x - y) - depth;
+        } else if (x - y < 0) {
+            return 100 * (x - y) + depth;
         } else {
-            return 100 * (b.countTriples(c) - b.countTriples(op));
+            return 0;
         }
     } else if (isMin) {
         int minVal = INT_MAX;
@@ -56,6 +63,12 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
 }
 
 void bot::makeMove(board &b, char c, char op) {
+    if (b.empty()) {
+        b.insert(c, 3);
+        return;
+    }
+
+    maxDepth = 7 + b.count() / 9;
     board tempB{b};
 
     int max = INT_MIN;
@@ -66,7 +79,7 @@ void bot::makeMove(board &b, char c, char op) {
         } catch (const char *e) {
             continue;
         }
-        int val = minimax(tempB, op, c, true, 0);
+        int val = minimax(tempB, op, c, true, 1);
         tempB.pop(i);
         if (val > max) {
             max = val;

@@ -2,7 +2,7 @@
 class board;
 
 class bot : public player {
-    const int maxDepth = 6;
+    int maxDepth;
     int minimax(board &b, char c, char op, bool isMin, int depth);
 
    public:

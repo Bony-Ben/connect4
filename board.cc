@@ -165,6 +165,27 @@ int board::countTriples(char player) {
     return count;
 }
 
+int board::count() {
+    int num = 0;
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            if (state[i][j]) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+bool board::empty() {
+    for (int i = 0; i < width; i++) {
+        if (state[i].size()) {
+            return false;
+        }
+    }
+    return true;
+}
+
 ostream& operator<<(ostream& os, const board& b) {
     for (int j = b.height - 1; j >= 0; j--) {
         for (int i = 0; i < b.width; i++) {
