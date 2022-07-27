@@ -1,6 +1,7 @@
 #include "bot.h"
 
 #include <climits>
+#include <cmath>
 #include <iostream>
 
 #include "../board.h"
@@ -55,8 +56,8 @@ void bot::makeMove(board &b, char c, char op) {
         b.insert(c, 3);
         return;
     }
-
-    maxDepth = 7 + b.count() / 7;
+    int count = b.count();
+    maxDepth = 7 + count * sqrt(count) / 20;
     board tempB{b};
 
     int max = INT_MIN;
