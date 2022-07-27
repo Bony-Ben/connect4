@@ -56,7 +56,7 @@ void bot::makeMove(board &b, char c, char op) {
         return;
     }
 
-    maxDepth = 7 + b.count() / 8;
+    maxDepth = 7 + b.count() / 7;
     board tempB{b};
 
     int max = INT_MIN;
