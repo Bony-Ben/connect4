@@ -1,5 +1,5 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 #ifndef BOARD_H
@@ -14,7 +14,9 @@ class board {
     const int connectLen = 4;
     board();
     void insert(char player, int index);
+    void pop(int index);
     char getWinner();
+    bool isFull();
 
     friend ostream& operator<<(ostream& os, const board& b);
 };

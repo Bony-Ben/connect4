@@ -5,7 +5,7 @@
 #include "../board.h"
 using namespace std;
 
-void human::makeMove(board &b, char c) {
+void human::makeMove(board &b, char c, char op) {
     int col;
     cin >> col;
     while (true) {

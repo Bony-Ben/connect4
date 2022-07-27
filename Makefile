@@ -3,7 +3,7 @@ VPATH=players
 CXX = g++
 CXXFLAGS = -std=c++14 -g -Wall -MMD -O3
 EXEC = connect4
-OBJECTS = main.o game.o board.o human.o
+OBJECTS = main.o game.o board.o human.o bot.o
 #add graphicsobserver.o window.o for graphic display
 DEPENDS = ${OBJECTS:.o=.d}
 

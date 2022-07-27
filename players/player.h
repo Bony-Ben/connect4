@@ -5,7 +5,7 @@ class board;
 
 class player {
    public:
-    virtual void makeMove(board &b, char c) = 0;
+    virtual void makeMove(board &b, char c, char op) = 0;
 };
 
 #endif

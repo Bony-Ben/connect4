@@ -13,6 +13,16 @@ void board::insert(char player, int index) {
     throw "ERROR: Invalid Insert";
 }
 
+void board::pop(int index) {
+    for (int i = height - 1; i >= 0; i--) {
+        if (state[index][i]) {
+            state[index][i] = 0;
+            return;
+        }
+    }
+    throw "ERROR: Invalid Pop";
+}
+
 char board::getWinner() {
     for (int k = 0; k < height; k++) {
         for (int i = 0; i + connectLen - 1 < width; i++) {
@@ -75,6 +85,17 @@ char board::getWinner() {
     }
 
     return 0;
+}
+
+bool board::isFull() {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            if (!state[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 ostream& operator<<(ostream& os, const board& b) {
