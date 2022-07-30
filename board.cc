@@ -1,4 +1,6 @@
 #include "board.h"
+
+#include <cmath>
 board::board() {
     state = vector<vector<char>>(width, vector<char>(height));
 }
@@ -98,7 +100,7 @@ bool board::isFull() {
     return true;
 }
 
-int board::countTriples(char player) {
+int board::evaluate(char player) {
     int count = 0;
 
     for (int k = 0; k < height; k++) {
@@ -113,8 +115,8 @@ int board::countTriples(char player) {
                     break;
                 }
             }
-            if (!bad && miniCount >= 3) {
-                count++;
+            if (!bad) {
+                count += pow(3, miniCount - 1);
             }
         }
     }
@@ -131,8 +133,8 @@ int board::countTriples(char player) {
                     break;
                 }
             }
-            if (!bad && miniCount >= 3) {
-                count++;
+            if (!bad) {
+                count += pow(3, miniCount - 1);
             }
         }
     }
@@ -149,8 +151,8 @@ int board::countTriples(char player) {
                     break;
                 }
             }
-            if (!bad && miniCount >= 3) {
-                count++;
+            if (!bad) {
+                count += pow(3, miniCount - 1);
             }
         }
     }
@@ -167,8 +169,8 @@ int board::countTriples(char player) {
                     break;
                 }
             }
-            if (!bad && miniCount >= 3) {
-                count++;
+            if (!bad) {
+                count += pow(3, miniCount - 1);
             }
         }
     }

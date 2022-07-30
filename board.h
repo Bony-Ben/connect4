@@ -17,7 +17,7 @@ class board {
     void pop(int index);
     char getWinner();
     bool isFull();
-    int countTriples(char player);
+    int evaluate(char player);
     int count();
     bool empty();
 

@@ -18,12 +18,12 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
     } else if (b.isFull()) {
         return 0;
     } else if (depth > maxDepth) {
-        int x = b.countTriples(c);
-        int y = b.countTriples(op);
+        int x = b.evaluate(c);
+        int y = b.evaluate(op);
         if (isMin) {
             swap(x, y);
         }
-        return 100 * (x - y);
+        return x - y;
     } else if (isMin) {
         int minVal = INT_MAX;
         for (int i = 0; i < b.width && minVal > -9000; i++) {
