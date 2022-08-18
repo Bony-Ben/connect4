@@ -90,14 +90,7 @@ char board::getWinner() {
 }
 
 bool board::isFull() {
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            if (!state[i][j]) {
-                return false;
-            }
-        }
-    }
-    return true;
+    return count() == width * height;
 }
 
 int board::evaluate(char player) {
@@ -116,7 +109,7 @@ int board::evaluate(char player) {
                 }
             }
             if (!bad) {
-                count += pow(3, miniCount - 1);
+                count += miniCount;
             }
         }
     }
@@ -134,7 +127,7 @@ int board::evaluate(char player) {
                 }
             }
             if (!bad) {
-                count += pow(3, miniCount - 1);
+                count += miniCount;
             }
         }
     }
@@ -152,7 +145,7 @@ int board::evaluate(char player) {
                 }
             }
             if (!bad) {
-                count += pow(3, miniCount - 1);
+                count += miniCount;
             }
         }
     }
@@ -170,7 +163,7 @@ int board::evaluate(char player) {
                 }
             }
             if (!bad) {
-                count += pow(3, miniCount - 1);
+                count += miniCount;
             }
         }
     }
@@ -190,17 +183,6 @@ int board::count() {
     return num;
 }
 
-bool board::empty() {
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            if (state[i][j]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 ostream& operator<<(ostream& os, const board& b) {
     for (int j = b.height - 1; j >= 0; j--) {
         for (int i = 0; i < b.width; i++) {
@@ -214,4 +196,8 @@ ostream& operator<<(ostream& os, const board& b) {
         cout << endl;
     }
     return os;
+}
+
+const vector<vector<char>>& board::getState() {
+    return state;
 }

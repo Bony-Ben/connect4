@@ -19,7 +19,7 @@ class board {
     bool isFull();
     int evaluate(char player);
     int count();
-    bool empty();
+    const vector<vector<char>>& getState();
 
     friend ostream& operator<<(ostream& os, const board& b);
 };

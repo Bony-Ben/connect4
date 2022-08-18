@@ -52,33 +52,62 @@ int bot::minimax(board &b, char c, char op, bool isMin, int depth) {
 }
 
 void bot::makeMove(board &b, char c, char op) {
-    if (b.empty()) {
-        b.insert(c, 3);
-        return;
-    }
     int count = b.count();
-    maxDepth = 7 + count * sqrt(count) / 20;
-    board tempB{b};
+    auto state = b.getState();
+    if (count == 0) {
+        b.insert(c, 3);
+    } else if (count == 1) {
+        if (state[1][0]) {
+            b.insert(c, 2);
+        } else if (state[5][0]) {
+            b.insert(c, 4);
+        } else {
+            b.insert(c, 3);
+        }
+    } else if (count == 2) {
+        if (state[1][0] || state[2][0]) {
+            b.insert(c, 5);
+        } else if (state[5][0] || state[4][0]) {
+            b.insert(c, 1);
+        } else {
+            b.insert(c, 3);
+        }
+    } else if (count == 3 && state[3][0] == op && state[3][1] == c) {
+        if (state[1][0]) {
+            b.insert(c, 2);
+        } else if (state[2][0]) {
+            b.insert(c, 1);
+        } else if (state[5][0]) {
+            b.insert(c, 4);
+        } else if (state[4][0]) {
+            b.insert(c, 5);
+        } else {
+            b.insert(c, 3);
+        }
+    } else {
+        maxDepth = 7 + count * log(count) / 20;
+        board tempB{b};
 
-    int max = INT_MIN;
-    vector<int> maxPos;
-    for (int i = 0; i < tempB.width; i++) {
-        try {
-            tempB.insert(c, i);
-        } catch (const char *e) {
-            continue;
+        int max = INT_MIN;
+        vector<int> maxPos;
+        for (int i = 0; i < tempB.width; i++) {
+            try {
+                tempB.insert(c, i);
+            } catch (const char *e) {
+                continue;
+            }
+            int val = minimax(tempB, op, c, true, 1);
+            tempB.pop(i);
+            if (val > max) {
+                max = val;
+                maxPos.clear();
+                maxPos.push_back(i);
+            } else if (val == max) {
+                maxPos.push_back(i);
+            }
+            std::cout << val << ' ';
         }
-        int val = minimax(tempB, op, c, true, 1);
-        tempB.pop(i);
-        if (val > max) {
-            max = val;
-            maxPos.clear();
-            maxPos.push_back(i);
-        } else if (val == max) {
-            maxPos.push_back(i);
-        }
-        cout << val << ' ';
+        std::cout << endl;
+        b.insert(c, maxPos[rand() % maxPos.size()]);
     }
-    cout << endl;
-    b.insert(c, maxPos[rand() % maxPos.size()]);
 }
